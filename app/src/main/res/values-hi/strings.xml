@@ -1,0 +1,196 @@
+<resources>
+    <string name="app_name">SkipBuddy</string>
+    <string name="accessibility_service_description">SkipBuddy आपके लिए YouTube में अपने आप विज्ञापन स्किप करता है।</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">होम</string>
+    <string name="nav_guide">गाइड</string>
+    <string name="nav_settings">सेटिंग्स</string>
+
+    <!-- Home Status & Controls -->
+    <string name="service_status_on_title">SkipBuddy चालू है</string>
+    <string name="service_status_on_subtitle">YouTube में विज्ञापन अपने आप स्किप करने के लिए तैयार।</string>
+    <string name="service_status_paused_title">SkipBuddy रुका हुआ है</string>
+    <string name="service_status_paused_subtitle">सर्विस चालू है, लेकिन नीचे ऑटो-स्किप रुका हुआ है।</string>
+    <string name="service_status_off_title">SkipBuddy बंद है</string>
+    <string name="service_status_off_subtitle">विज्ञापन स्किप करने के लिए Accessibility सर्विस चालू करें।</string>
+
+    <string name="warning_enable_title">चालू करना आवश्यक है</string>
+    <string name="warning_enable_body">Android Accessibility सेटिंग्स से चालू किए बिना SkipBuddy विज्ञापन स्किप नहीं कर सकता।</string>
+    <string name="button_enable_skipbuddy">SkipBuddy चालू करें</string>
+
+    <string name="toggle_autoskip_active">ऑटो-स्किप चालू है</string>
+    <string name="toggle_autoskip_paused">ऑटो-स्किप रुका हुआ है</string>
+    <string name="button_pause_autoskip">ऑटो-स्किप रोकें</string>
+    <string name="button_resume_autoskip">ऑटो-स्किप फिर से चालू करें</string>
+
+    <!-- Home Dashboard -->
+    <string name="stat_ads_detected">विज्ञापन मिले</string>
+    <string name="stat_ads_skipped">विज्ञापन स्किप</string>
+    <string name="stat_could_not_skip">स्किप नहीं हुए</string>
+    <string name="stat_could_not_skip_split">बिना-स्किप: %1$d · विफल: %2$d</string>
+    <string name="stat_unskippable_muted">म्यूट किए गए</string>
+    <string name="stat_muted_time_label">म्यूट समय %1$s</string>
+    <string name="stat_today_label">आज</string>
+    <string name="stat_total_label">कुल</string>
+
+    <string name="stat_success_rate">स्किप सफलता दर</string>
+    <string name="stat_success_rate_all_time">कुल (%2$d में से %1$d)</string>
+    <string name="stat_success_rate_today">आज: %1$s</string>
+    <string name="stat_last_activity_skip">आखिरी स्किप: %1$s</string>
+    <string name="stat_last_activity_ad">आखिरी विज्ञापन: %1$s</string>
+    <string name="stat_never">अभी कोई नहीं</string>
+
+    <string name="chart_last_7_days_title">पिछले 7 दिन (विज्ञापन स्किप)</string>
+    <string name="chart_today_short">आज</string>
+
+    <string name="recent_activity_title">हाल की गतिविधि</string>
+    <string name="recent_activity_empty">अभी तक कोई विज्ञापन दर्ज नहीं हुआ है। YouTube खोलें और SkipBuddy अपने आप काम करेगा।</string>
+    <string name="outcome_skipped">स्किप किया गया</string>
+    <string name="outcome_unskippable">बिना-स्किप (म्यूट)</string>
+    <string name="outcome_failed">स्किप विफल</string>
+
+    <!-- Guide Tab -->
+    <string name="guide_title">SkipBuddy कैसे काम करता है</string>
+    <string name="guide_caregiver_note">आप एक बार SkipBuddy सेटअप करके बटन को छिपाकर लॉक कर दें — आपके पिताजी बस YouTube देखेंगे, उन्हें SkipBuddy छूने की ज़रूरत नहीं।</string>
+    <string name="button_reopen_wizard">सेटअप विज़ार्ड खोलें</string>
+    <string name="guide_step_1_title">1. Accessibility चालू करें</string>
+    <string name="guide_step_1_body">Accessibility सेटिंग्स खोलें, SkipBuddy चुनें और चालू करें।</string>
+    <string name="guide_step_2_title">2. YouTube खोलें</string>
+    <string name="guide_step_2_body">कोई भी वीडियो पोर्ट्रेट, लैंडस्केप या फुलस्क्रीन में चलाएं।</string>
+    <string name="guide_step_3_title">3. विज्ञापन अपने आप स्किप होंगे</string>
+    <string name="guide_step_3_body">Skip Ad बटन दिखते ही SkipBuddy उसे दबाएगा और बिना-स्किप विज्ञापन म्यूट रखेगा।</string>
+
+    <!-- Permissions -->
+    <string name="permissions_checklist_title">अनुमति सूची</string>
+    <string name="permission_granted">अनुमत</string>
+    <string name="permission_not_granted">अनुमत नहीं</string>
+    <string name="button_open_settings">सेटिंग्स खोलें</string>
+    <string name="button_open">खोलें</string>
+
+    <string name="perm_accessibility_title">Accessibility सर्विस</string>
+    <string name="perm_accessibility_desc">केवल YouTube के अंदर Skip Ad ढूंढने और दबाने के लिए।</string>
+    <string name="perm_overlay_title">अन्य ऐप्स के ऊपर दिखाएं</string>
+    <string name="perm_overlay_desc">केवल YouTube के लिए फ्लोटिंग बटन और विज्ञापन संदेश दिखाने हेतु।</string>
+    <string name="perm_battery_title">बैटरी ऑप्टिमाइज़ेशन</string>
+    <string name="perm_battery_desc">Android को बैकग्राउंड में SkipBuddy बंद करने से रोकता है।</string>
+    <string name="perm_notifications_title">नोटिफिकेशन</string>
+    <string name="perm_notifications_desc">फोन रीस्टार्ट के बाद सर्विस बंद होने पर शांत रिमाइंडर।</string>
+
+    <!-- Android 13+ Restricted Setting Help -->
+    <string name="restricted_setting_title">यदि Android \"Restricted setting\" दिखाए</string>
+    <string name="restricted_setting_body">कुछ फोन (Android 13 या नए) साइडलोड किए गए ऐप के लिए इसे एक बार ब्लॉक कर सकते हैं:\n1) Settings &gt; Apps &gt; SkipBuddy खोलें।\n2) ऊपर दाईं ओर तीन-डॉट (⋮) मेन्यू टैप करें &gt; Allow restricted settings चुनें और PIN/फिंगरप्रिंट से पुष्टि करें।\n3) वापस Accessibility में आकर SkipBuddy चालू करें।</string>
+    <string name="button_open_app_settings">ऐप सेटिंग्स खोलें</string>
+
+    <!-- Setup Wizard -->
+    <string name="wizard_title">SkipBuddy सेटअप</string>
+    <string name="wizard_step_counter">चरण %1$d / %2$d</string>
+    <string name="wizard_skip">सेटअप छोड़ें</string>
+    <string name="wizard_back">पीछे</string>
+    <string name="wizard_next">अगला</string>
+    <string name="wizard_finish">समाप्त</string>
+
+    <string name="wizard_step_accessibility_title">Accessibility सर्विस चालू करें</string>
+    <string name="wizard_step_accessibility_body">YouTube में विज्ञापन पहचानने और Skip Ad दबाने के लिए यह आवश्यक है।</string>
+    <string name="wizard_step_overlay_title">अन्य ऐप्स के ऊपर दिखाने की अनुमति दें</string>
+    <string name="wizard_step_overlay_body">YouTube चलते समय फ्लोटिंग संकेतक और प्रतीक्षा संदेश दिखाता है।</string>
+    <string name="wizard_step_battery_title">बैटरी ऑप्टिमाइज़ेशन बंद करें</string>
+    <string name="wizard_step_battery_body">बैकग्राउंड में SkipBuddy को बिना रुके चालू रखता है।</string>
+    <string name="wizard_step_notifications_title">नोटिफिकेशन की अनुमति दें</string>
+    <string name="wizard_step_notifications_body">फोन रीस्टार्ट होने पर सर्विस बंद हो तो आपको याद दिलाता है।</string>
+    <string name="wizard_step_autostart_title">Xiaomi और Samsung ऑटोस्टार्ट गाइड</string>
+    <string name="wizard_step_autostart_xiaomi">Xiaomi / Redmi / POCO (MIUI / HyperOS):\nApp Info खोलें → Autostart चालू करें → Battery saver → \"No restrictions\" चुनें।</string>
+    <string name="wizard_step_autostart_samsung">Samsung (One UI):\nApp Info खोलें → Battery → \"Unrestricted\" चुनें → Settings → Battery → Background usage limits → \"Never auto sleeping apps\" में SkipBuddy जोड़ें।</string>
+    <string name="wizard_open_app_info">ऐप सेटिंग्स खोलें</string>
+    <string name="wizard_step_sound_title">वॉइस घोषणा जांचें</string>
+    <string name="wizard_step_sound_body">विज्ञापन म्यूट होने पर बजने वाली आवाज़ सुनकर जांचें।</string>
+    <string name="wizard_step_finish_title">बिना परेशानी देखने के लिए तैयार</string>
+    <string name="wizard_step_finish_body">अभी फ्लोटिंग बटन को छिपाकर लॉक कर दें ताकि गलती से हाथ लगने पर भी SkipBuddy बंद न हो।</string>
+    <string name="wizard_button_hide_and_lock">बटन छिपाएं और लॉक करें (सुझाया गया)</string>
+    <string name="wizard_button_keep_autohide">ऑटो-हाइड और लॉक रखें</string>
+
+    <!-- Settings Cards 1-6 -->
+    <string name="settings_card_autoskip">ऑटो-स्किप</string>
+    <string name="settings_master_autoskip">मास्टर ऑटो-स्किप</string>
+    <string name="settings_master_autoskip_desc">Skip Ad बटन आते ही अपने आप दबाता है।</string>
+    <string name="settings_only_youtube">केवल YouTube में</string>
+    <string name="settings_only_youtube_note">सुरक्षा के लिए, SkipBuddy अन्य ऐप्स में कभी काम नहीं करता।</string>
+    <string name="settings_click_delay">क्लिक देरी</string>
+    <string name="delay_instant">तुरंत</string>
+    <string name="delay_half_sec">0.5 से.</string>
+    <string name="delay_one_sec">1 से.</string>
+    <string name="settings_mute_unskippable">बिना-स्किप विज्ञापन म्यूट करें</string>
+    <string name="settings_mute_unskippable_desc">विज्ञापन की आवाज़ बंद करता है और वीडियो शुरू होने पर सही वॉल्यूम वापस लाता है।</string>
+
+    <string name="settings_card_floating">फ्लोटिंग बटन</string>
+    <string name="settings_floating_visibility">दृश्यता</string>
+    <string name="visibility_show">दिखाएं</string>
+    <string name="visibility_hidden">छिपा हुआ</string>
+    <string name="visibility_autohide">ऑटो-हाइड</string>
+    <string name="settings_floating_autohide_hint">ऑटो-हाइड 3 सेकंड बाद किनारे पर 12dp पट्टी बन जाता है। छिपा होने पर भी ऑटो-स्किप पूरा काम करता है।</string>
+    <string name="settings_floating_lock">फ्लोटिंग बटन लॉक करें</string>
+    <string name="settings_floating_lock_hint">लॉक रहने पर साधारण टैप अनदेखा होता है। 2 सेकंड दबाने पर केवल स्थिति दिखती है।</string>
+    <string name="settings_floating_size">बटन का आकार</string>
+    <string name="size_small">छोटा</string>
+    <string name="size_medium">मध्यम</string>
+    <string name="size_large">बड़ा</string>
+    <string name="settings_floating_side">डिफ़ॉल्ट किनारा</string>
+    <string name="side_left">बायां</string>
+    <string name="side_right">दायां</string>
+    <string name="settings_floating_opacity">पारदर्शिता</string>
+    <string name="opacity_low">कम</string>
+    <string name="opacity_medium">मध्यम</string>
+    <string name="opacity_full">पूर्ण</string>
+    <string name="button_reset_position">स्थिति रीसेट करें</string>
+
+    <string name="settings_card_feedback">फीडबैक</string>
+    <string name="settings_when_skipped">जब विज्ञापन स्किप हो</string>
+    <string name="feedback_none">कोई नहीं</string>
+    <string name="feedback_vibrate">कंपन</string>
+    <string name="feedback_flash">चेकमार्क फ्लैश</string>
+    <string name="feedback_sound">ध्वनि</string>
+    <string name="settings_show_ad_skipped_msg">\"विज्ञापन स्किप हुआ\" संदेश दिखाएं</string>
+    <string name="settings_show_ad_skipped_msg_hint">देखने में बाधा न आए इसलिए डिफ़ॉल्ट रूप से बंद है।</string>
+
+    <string name="settings_card_permissions">अनुमतियां</string>
+
+    <string name="settings_card_language">भाषा और घोषणा</string>
+    <string name="settings_language_label">ऐप और आवाज़ की भाषा</string>
+    <string name="lang_bangla">বাংলা</string>
+    <string name="lang_english">English</string>
+    <string name="lang_hindi">हिन्दी</string>
+    <string name="lang_system">सिस्टम डिफ़ॉल्ट</string>
+    <string name="settings_voice_announcement">वॉइस घोषणा</string>
+    <string name="settings_voice_announcement_desc">विज्ञापन म्यूट रहने पर एक बार शांत आवाज़ में बताता है।</string>
+    <string name="settings_show_ad_banner">स्क्रीन पर विज्ञापन संदेश दिखाएं</string>
+    <string name="settings_show_ad_banner_desc">विज्ञापन चलते समय छोटा प्रतीक्षा संदेश दिखाता है।</string>
+    <string name="button_play_test_sound">टेस्ट ध्वनि चलाएं</string>
+
+    <string name="settings_card_data_about">डेटा और जानकारी</string>
+    <string name="button_reset_today">आज के आंकड़े रीसेट करें</string>
+    <string name="button_reset_all">सभी आंकड़े रीसेट करें</string>
+    <string name="button_clear_log">हाल की सूची साफ करें</string>
+    <string name="settings_debug_log">डिटेक्शन डीबग लॉग</string>
+    <string name="settings_debug_log_desc">केवल परीक्षण के लिए YouTube विज्ञापन नोड जानकारी लॉग करता है।</string>
+    <string name="button_share_debug_log">डीबग लॉग शेयर करें</string>
+    <string name="about_version_format">SkipBuddy संस्करण %1$s</string>
+    <string name="about_privacy_text">ऑफ़लाइन काम करता है, कोई डेटा एकत्र नहीं करता, केवल YouTube (com.google.android.youtube) में पोर्ट्रेट, लैंडस्केप और फुलस्क्रीन में काम करता है।</string>
+
+    <!-- Announcement phrase -->
+    <string name="ad_wait_announcement">विज्ञापन चल रहा है, कृपया थोड़ी देर प्रतीक्षा करें</string>
+
+    <!-- Notifications & Toasts -->
+    <string name="notif_channel_name">SkipBuddy स्थिति</string>
+    <string name="notif_channel_desc">फोन रीस्टार्ट के बाद SkipBuddy बंद होने पर शांत रिमाइंडर।</string>
+    <string name="notif_boot_off_title">SkipBuddy बंद है</string>
+    <string name="notif_boot_off_body">YouTube के लिए Accessibility फिर से चालू करने के लिए टैप करें।</string>
+    <string name="toast_ad_skipped">विज्ञापन स्किप हुआ</string>
+    <string name="toast_locked_status_active">SkipBuddy चालू है (लॉक — ऐप में बदलें)</string>
+    <string name="toast_locked_status_paused">SkipBuddy रुका हुआ है (लॉक — ऐप में बदलें)</string>
+    <string name="toast_position_reset">फ्लोटिंग बटन की स्थिति रीसेट की गई</string>
+    <string name="toast_today_reset">आज के आंकड़े रीसेट किए गए</string>
+    <string name="toast_all_reset">सभी आंकड़े और इतिहास रीसेट किए गए</string>
+    <string name="toast_log_cleared">हाल की गतिविधि साफ की गई</string>
+    <string name="toast_debug_log_empty">अभी तक कोई डीबग लॉग दर्ज नहीं हुआ है।</string>
+    <string name="share_debug_log_title">SkipBuddy डीबग लॉग शेयर करें</string>
+</resources>

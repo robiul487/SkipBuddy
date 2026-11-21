@@ -1,0 +1,196 @@
+<resources>
+    <string name="app_name">SkipBuddy</string>
+    <string name="accessibility_service_description">SkipBuddy automatically taps Skip Ad in YouTube for you.</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_guide">Guide</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Home Status & Controls -->
+    <string name="service_status_on_title">SkipBuddy is ON</string>
+    <string name="service_status_on_subtitle">Watching YouTube to skip ads automatically.</string>
+    <string name="service_status_paused_title">SkipBuddy is PAUSED</string>
+    <string name="service_status_paused_subtitle">Service is active, but auto-skip is paused below.</string>
+    <string name="service_status_off_title">SkipBuddy is OFF</string>
+    <string name="service_status_off_subtitle">Turn on Accessibility Service so ads can be skipped.</string>
+
+    <string name="warning_enable_title">Action Needed</string>
+    <string name="warning_enable_body">SkipBuddy cannot tap Skip Ad until you turn it on in Android Accessibility Settings.</string>
+    <string name="button_enable_skipbuddy">Enable SkipBuddy</string>
+
+    <string name="toggle_autoskip_active">Auto-Skip is ON</string>
+    <string name="toggle_autoskip_paused">Auto-Skip is PAUSED</string>
+    <string name="button_pause_autoskip">Pause Auto-Skip</string>
+    <string name="button_resume_autoskip">Resume Auto-Skip</string>
+
+    <!-- Home Dashboard -->
+    <string name="stat_ads_detected">Ads Detected</string>
+    <string name="stat_ads_skipped">Ads Skipped</string>
+    <string name="stat_could_not_skip">Could Not Skip</string>
+    <string name="stat_could_not_skip_split">Unskippable: %1$d · Failed: %2$d</string>
+    <string name="stat_unskippable_muted">Unskippable Muted</string>
+    <string name="stat_muted_time_label">Muted %1$s</string>
+    <string name="stat_today_label">Today</string>
+    <string name="stat_total_label">Total</string>
+
+    <string name="stat_success_rate">Skip Success Rate</string>
+    <string name="stat_success_rate_all_time">All-time (%1$d of %2$d)</string>
+    <string name="stat_success_rate_today">Today: %1$s</string>
+    <string name="stat_last_activity_skip">Last skip: %1$s</string>
+    <string name="stat_last_activity_ad">Last ad: %1$s</string>
+    <string name="stat_never">None yet</string>
+
+    <string name="chart_last_7_days_title">Last 7 Days (Ads Skipped)</string>
+    <string name="chart_today_short">Today</string>
+
+    <string name="recent_activity_title">Recent Activity</string>
+    <string name="recent_activity_empty">No ad activity yet. Open YouTube and SkipBuddy will handle ads for you.</string>
+    <string name="outcome_skipped">Skipped</string>
+    <string name="outcome_unskippable">Unskippable (Muted)</string>
+    <string name="outcome_failed">Failed to skip</string>
+
+    <!-- Guide Tab -->
+    <string name="guide_title">How SkipBuddy Works</string>
+    <string name="guide_caregiver_note">You set SkipBuddy up once, then hide and lock the button — your father just watches YouTube, he never needs to touch SkipBuddy.</string>
+    <string name="button_reopen_wizard">Open Setup Wizard</string>
+    <string name="guide_step_1_title">1. Enable Accessibility</string>
+    <string name="guide_step_1_body">Open Accessibility Settings, find SkipBuddy, and turn it ON.</string>
+    <string name="guide_step_2_title">2. Open YouTube</string>
+    <string name="guide_step_2_body">Play any video in portrait, landscape, or fullscreen.</string>
+    <string name="guide_step_3_title">3. Ads Skip Automatically</string>
+    <string name="guide_step_3_body">SkipBuddy taps Skip Ad automatically and mutes unskippable ads.</string>
+
+    <!-- Permissions -->
+    <string name="permissions_checklist_title">Permission Checklist</string>
+    <string name="permission_granted">Granted</string>
+    <string name="permission_not_granted">Not Granted</string>
+    <string name="button_open_settings">Open Settings</string>
+    <string name="button_open">Open</string>
+
+    <string name="perm_accessibility_title">Accessibility Service</string>
+    <string name="perm_accessibility_desc">Finds and taps Skip Ad inside YouTube only.</string>
+    <string name="perm_overlay_title">Display Over Other Apps</string>
+    <string name="perm_overlay_desc">Shows the optional YouTube-only floating button and ad banner.</string>
+    <string name="perm_battery_title">Battery Optimization</string>
+    <string name="perm_battery_desc">Stops Android from turning off SkipBuddy in the background.</string>
+    <string name="perm_notifications_title">Notifications</string>
+    <string name="perm_notifications_desc">Quiet reminder after phone restart if SkipBuddy is off.</string>
+
+    <!-- Android 13+ Restricted Setting Help -->
+    <string name="restricted_setting_title">If Android shows \"Restricted setting\"</string>
+    <string name="restricted_setting_body">Some phones (Android 13 and newer) may block this once for sideloaded apps:\n1) Open Settings &gt; Apps &gt; SkipBuddy.\n2) Tap the three-dot menu (top right) &gt; Allow restricted settings, and confirm with your PIN/fingerprint.\n3) Come back to Accessibility and turn SkipBuddy ON.</string>
+    <string name="button_open_app_settings">Open App Settings</string>
+
+    <!-- Setup Wizard -->
+    <string name="wizard_title">SkipBuddy Setup</string>
+    <string name="wizard_step_counter">Step %1$d of %2$d</string>
+    <string name="wizard_skip">Skip Setup</string>
+    <string name="wizard_back">Back</string>
+    <string name="wizard_next">Next</string>
+    <string name="wizard_finish">Finish</string>
+
+    <string name="wizard_step_accessibility_title">Turn On Accessibility Service</string>
+    <string name="wizard_step_accessibility_body">This is required so SkipBuddy can detect ads and tap Skip Ad inside YouTube.</string>
+    <string name="wizard_step_overlay_title">Allow Display Over Other Apps</string>
+    <string name="wizard_step_overlay_body">Allows the YouTube-only floating indicator and on-screen ad wait banner.</string>
+    <string name="wizard_step_battery_title">Disable Battery Optimization</string>
+    <string name="wizard_step_battery_body">Keeps SkipBuddy running quietly in the background without being stopped.</string>
+    <string name="wizard_step_notifications_title">Allow Quiet Notifications</string>
+    <string name="wizard_step_notifications_body">Lets SkipBuddy remind you after a phone restart if the service is off.</string>
+    <string name="wizard_step_autostart_title">Xiaomi &amp; Samsung Autostart Guide</string>
+    <string name="wizard_step_autostart_xiaomi">Xiaomi / Redmi / POCO (MIUI / HyperOS):\nOpen App Info → Turn ON Autostart → Battery saver → Choose \"No restrictions\".</string>
+    <string name="wizard_step_autostart_samsung">Samsung (One UI):\nOpen App Info → Battery → Choose \"Unrestricted\" → Settings → Battery → Background usage limits → Add SkipBuddy to \"Never auto sleeping apps\".</string>
+    <string name="wizard_open_app_info">Open App Settings</string>
+    <string name="wizard_step_sound_title">Test Voice Announcement</string>
+    <string name="wizard_step_sound_body">Play the bundled announcement voice that plays while an unskippable ad is muted.</string>
+    <string name="wizard_step_finish_title">Ready for Hands-Off Watching</string>
+    <string name="wizard_step_finish_body">Hide and lock the floating button now so accidental touches can never pause SkipBuddy while watching YouTube.</string>
+    <string name="wizard_button_hide_and_lock">Hide &amp; Lock Button (Recommended)</string>
+    <string name="wizard_button_keep_autohide">Keep Auto-Hide &amp; Lock</string>
+
+    <!-- Settings Cards 1-6 -->
+    <string name="settings_card_autoskip">Auto-Skip</string>
+    <string name="settings_master_autoskip">Master Auto-Skip</string>
+    <string name="settings_master_autoskip_desc">Automatically tap Skip Ad when available.</string>
+    <string name="settings_only_youtube">Only in YouTube</string>
+    <string name="settings_only_youtube_note">For safety, SkipBuddy never works in other apps.</string>
+    <string name="settings_click_delay">Click Delay</string>
+    <string name="delay_instant">Instant</string>
+    <string name="delay_half_sec">0.5s</string>
+    <string name="delay_one_sec">1s</string>
+    <string name="settings_mute_unskippable">Mute Unskippable Ads</string>
+    <string name="settings_mute_unskippable_desc">Mutes ad audio and restores exact volume when video resumes.</string>
+
+    <string name="settings_card_floating">Floating Button</string>
+    <string name="settings_floating_visibility">Visibility</string>
+    <string name="visibility_show">Show</string>
+    <string name="visibility_hidden">Hidden</string>
+    <string name="visibility_autohide">Auto-Hide</string>
+    <string name="settings_floating_autohide_hint">Auto-Hide shrinks to a tiny 12dp edge sliver after 3s. Hidden removes it completely while auto-skip keeps working.</string>
+    <string name="settings_floating_lock">Lock Floating Button</string>
+    <string name="settings_floating_lock_hint">Single taps are ignored when locked. Hold 2s to view status only.</string>
+    <string name="settings_floating_size">Button Size</string>
+    <string name="size_small">Small</string>
+    <string name="size_medium">Medium</string>
+    <string name="size_large">Large</string>
+    <string name="settings_floating_side">Default Side</string>
+    <string name="side_left">Left</string>
+    <string name="side_right">Right</string>
+    <string name="settings_floating_opacity">Opacity</string>
+    <string name="opacity_low">Low</string>
+    <string name="opacity_medium">Medium</string>
+    <string name="opacity_full">Full</string>
+    <string name="button_reset_position">Reset Position</string>
+
+    <string name="settings_card_feedback">Feedback</string>
+    <string name="settings_when_skipped">When an ad is skipped</string>
+    <string name="feedback_none">None</string>
+    <string name="feedback_vibrate">Vibrate</string>
+    <string name="feedback_flash">Flash checkmark</string>
+    <string name="feedback_sound">Sound</string>
+    <string name="settings_show_ad_skipped_msg">Show \"Ad Skipped\" message</string>
+    <string name="settings_show_ad_skipped_msg_hint">Off by default so watching is not disturbed.</string>
+
+    <string name="settings_card_permissions">Permissions</string>
+
+    <string name="settings_card_language">Language &amp; Announcement</string>
+    <string name="settings_language_label">App &amp; Voice Language</string>
+    <string name="lang_bangla">বাংলা</string>
+    <string name="lang_english">English</string>
+    <string name="lang_hindi">हिन्दी</string>
+    <string name="lang_system">System Default</string>
+    <string name="settings_voice_announcement">Voice Announcement</string>
+    <string name="settings_voice_announcement_desc">Plays a calm voice once while an unskippable ad is muted.</string>
+    <string name="settings_show_ad_banner">Show Ad Message on Screen</string>
+    <string name="settings_show_ad_banner_desc">Displays a short waiting banner during ads.</string>
+    <string name="button_play_test_sound">Play Test Sound</string>
+
+    <string name="settings_card_data_about">Data &amp; About</string>
+    <string name="button_reset_today">Reset Today Counter</string>
+    <string name="button_reset_all">Reset All Counters</string>
+    <string name="button_clear_log">Clear Recent Activity Log</string>
+    <string name="settings_debug_log">Detection Debug Log</string>
+    <string name="settings_debug_log_desc">Logs YouTube ad node fields only for device testing.</string>
+    <string name="button_share_debug_log">Share Debug Log</string>
+    <string name="about_version_format">SkipBuddy Version %1$s</string>
+    <string name="about_privacy_text">Works offline, collects no data, works only in YouTube (com.google.android.youtube) in portrait, landscape, and fullscreen.</string>
+
+    <!-- Announcement phrase -->
+    <string name="ad_wait_announcement">Advertisement is playing, please wait a moment</string>
+
+    <!-- Notifications & Toasts -->
+    <string name="notif_channel_name">SkipBuddy Status</string>
+    <string name="notif_channel_desc">Quiet reminder if SkipBuddy is turned off after phone restart.</string>
+    <string name="notif_boot_off_title">SkipBuddy is turned off</string>
+    <string name="notif_boot_off_body">Tap to open SkipBuddy and turn Accessibility back on for YouTube.</string>
+    <string name="toast_ad_skipped">Ad Skipped</string>
+    <string name="toast_locked_status_active">SkipBuddy is ON (Locked — change in app)</string>
+    <string name="toast_locked_status_paused">SkipBuddy is PAUSED (Locked — change in app)</string>
+    <string name="toast_position_reset">Floating button position reset</string>
+    <string name="toast_today_reset">Today stats reset</string>
+    <string name="toast_all_reset">All stats and history reset</string>
+    <string name="toast_log_cleared">Recent activity cleared</string>
+    <string name="toast_debug_log_empty">No debug log entries recorded yet.</string>
+    <string name="share_debug_log_title">Share SkipBuddy Debug Log</string>
+</resources>
