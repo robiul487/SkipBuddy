@@ -1,6 +1,18 @@
 # SkipBuddy
 
-SkipBuddy is an Android app that taps YouTube's **Skip Ad** button automatically, for viewers who cannot tap it themselves. It was built for a father who watches YouTube but cannot press the small Skip button in time.
+SkipBuddy is an Android app that taps YouTube's **Skip Ad** button automatically, for viewers who cannot tap it themselves.
+
+## Why this exists
+
+My father loves watching YouTube on his phone. But every time an ad appears, he faces the same small struggle: the Skip Ad button is tiny, it stays on screen for only a few seconds, and by the time he finds it, it is gone. So he sits through ad after ad, waiting for the video he actually wanted to watch.
+
+I set up his phone for him, but I cannot be there to press Skip every time. So I built the next best thing: an app that presses it for him.
+
+SkipBuddy watches for the Skip button and taps it the moment it appears. When an ad cannot be skipped, it turns the sound down, and a calm voice says, "Advertisement is playing, please wait a moment," so he knows what is happening and that his video is coming back.
+
+He never has to open this app, change a setting, or tap anything. He just watches YouTube the way he always has. The struggle is simply gone.
+
+If someone you love has the same problem, this was made for them too.
 
 ## What it does
 
