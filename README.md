@@ -2,7 +2,7 @@
 
 SkipBuddy is an Android app that taps YouTube's **Skip Ad** button automatically, for viewers who cannot tap it themselves.
 
-**[Download the latest APK (v2.0)](https://github.com/robiul487/SkipBuddy/releases/download/v2.0/SkipBuddy.v2.APK.apk)** · **[All releases](https://github.com/robiul487/SkipBuddy/releases)**
+**[Download the latest APK (v3.1)](https://github.com/robiul487/SkipBuddy/releases/download/v3.1/SkipBuddy.v3.1.apk)** · **[All releases](https://github.com/robiul487/SkipBuddy/releases)**
 
 ## Why this exists
 
