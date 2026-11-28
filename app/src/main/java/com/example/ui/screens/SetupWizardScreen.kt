@@ -21,15 +21,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.VolumeUp
-import androidx.compose.material.icons.rounded.AccessibilityNew
-import androidx.compose.material.icons.rounded.BatteryChargingFull
 import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material.icons.rounded.Layers
 import androidx.compose.material.icons.rounded.Lock
-import androidx.compose.material.icons.rounded.NotificationsActive
-import androidx.compose.material.icons.rounded.Smartphone
+import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -52,6 +46,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.R
@@ -177,7 +172,7 @@ fun SetupWizardScreen(
                     when (currentStep) {
                         0 -> {
                             WizardPermissionStep(
-                                icon = Icons.Rounded.AccessibilityNew,
+                                icon = ImageVector.vectorResource(R.drawable.ic_accessibility),
                                 title = stringResource(R.string.wizard_step_accessibility_title),
                                 body = stringResource(R.string.wizard_step_accessibility_body),
                                 granted = uiState.isServiceActive,
@@ -192,7 +187,7 @@ fun SetupWizardScreen(
                         }
 
                         1 -> WizardPermissionStep(
-                            icon = Icons.Rounded.Layers,
+                            icon = ImageVector.vectorResource(R.drawable.ic_layers),
                             title = stringResource(R.string.wizard_step_overlay_title),
                             body = stringResource(R.string.wizard_step_overlay_body),
                             granted = uiState.permissions.overlayGranted,
@@ -202,7 +197,7 @@ fun SetupWizardScreen(
                         )
 
                         2 -> WizardPermissionStep(
-                            icon = Icons.Rounded.BatteryChargingFull,
+                            icon = ImageVector.vectorResource(R.drawable.ic_battery_charging),
                             title = stringResource(R.string.wizard_step_battery_title),
                             body = stringResource(R.string.wizard_step_battery_body),
                             granted = uiState.permissions.batteryOptimizationIgnored,
@@ -212,7 +207,7 @@ fun SetupWizardScreen(
                         )
 
                         3 -> WizardPermissionStep(
-                            icon = Icons.Rounded.NotificationsActive,
+                            icon = Icons.Rounded.Notifications,
                             title = stringResource(R.string.wizard_step_notifications_title),
                             body = stringResource(R.string.wizard_step_notifications_body),
                             granted = uiState.permissions.notificationsGranted,
@@ -223,7 +218,7 @@ fun SetupWizardScreen(
 
                         4 -> SkipBuddyCard {
                             WizardStepHeader(
-                                icon = Icons.Rounded.Smartphone,
+                                icon = ImageVector.vectorResource(R.drawable.ic_smartphone),
                                 title = stringResource(R.string.wizard_step_autostart_title)
                             )
                             Spacer(modifier = Modifier.height(14.dp))
@@ -261,7 +256,7 @@ fun SetupWizardScreen(
 
                         5 -> SkipBuddyCard {
                             WizardStepHeader(
-                                icon = Icons.AutoMirrored.Rounded.VolumeUp,
+                                icon = ImageVector.vectorResource(R.drawable.ic_volume_up),
                                 title = stringResource(R.string.wizard_step_sound_title)
                             )
                             Spacer(modifier = Modifier.height(10.dp))
@@ -297,7 +292,7 @@ fun SetupWizardScreen(
                                 )
                             ) {
                                 Icon(
-                                    imageVector = Icons.AutoMirrored.Rounded.VolumeUp,
+                                    imageVector = ImageVector.vectorResource(R.drawable.ic_volume_up),
                                     contentDescription = null
                                 )
                                 Spacer(modifier = Modifier.width(10.dp))
@@ -482,7 +477,11 @@ private fun WizardPermissionStep(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
-                imageVector = if (granted) Icons.Rounded.CheckCircle else Icons.Rounded.ErrorOutline,
+                imageVector = if (granted) {
+                    Icons.Rounded.CheckCircle
+                } else {
+                    ImageVector.vectorResource(R.drawable.ic_error_outline)
+                },
                 contentDescription = null,
                 tint = if (granted) EmeraldPrimary else StatusOffRed,
                 modifier = Modifier.size(24.dp)

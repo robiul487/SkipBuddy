@@ -18,10 +18,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AccessibilityNew
-import androidx.compose.material.icons.rounded.AutoAwesome
-import androidx.compose.material.icons.rounded.FastForward
-import androidx.compose.material.icons.rounded.OndemandVideo
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -35,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.R
@@ -100,7 +98,7 @@ fun GuideScreen(
                     )
                 ) {
                     Icon(
-                        imageVector = Icons.Rounded.AutoAwesome,
+                        imageVector = Icons.Rounded.Star,
                         contentDescription = null,
                         modifier = Modifier.size(22.dp)
                     )
@@ -119,17 +117,17 @@ fun GuideScreen(
             SkipBuddyCard(modifier = Modifier.testTag("guide_steps_card")) {
                 Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
                     GuideStepItem(
-                        icon = Icons.Rounded.AccessibilityNew,
+                        icon = ImageVector.vectorResource(R.drawable.ic_accessibility),
                         title = stringResource(R.string.guide_step_1_title),
                         body = stringResource(R.string.guide_step_1_body)
                     )
                     GuideStepItem(
-                        icon = Icons.Rounded.OndemandVideo,
+                        icon = ImageVector.vectorResource(R.drawable.ic_ondemand_video),
                         title = stringResource(R.string.guide_step_2_title),
                         body = stringResource(R.string.guide_step_2_body)
                     )
                     GuideStepItem(
-                        icon = Icons.Rounded.FastForward,
+                        icon = ImageVector.vectorResource(R.drawable.ic_fast_forward),
                         title = stringResource(R.string.guide_step_3_title),
                         body = stringResource(R.string.guide_step_3_body)
                     )

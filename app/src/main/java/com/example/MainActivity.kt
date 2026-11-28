@@ -22,8 +22,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.MenuBook
-import androidx.compose.material.icons.automirrored.rounded.MenuBook
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.rounded.Home
@@ -52,9 +50,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -365,8 +365,9 @@ private fun tabLabelRes(tab: MainTab): Int = when (tab) {
     MainTab.SETTINGS -> R.string.nav_settings
 }
 
-private fun tabIcon(tab: MainTab, selected: Boolean) = when (tab) {
+@Composable
+private fun tabIcon(tab: MainTab, selected: Boolean): ImageVector = when (tab) {
     MainTab.HOME -> if (selected) Icons.Rounded.Home else Icons.Outlined.Home
-    MainTab.GUIDE -> if (selected) Icons.AutoMirrored.Rounded.MenuBook else Icons.AutoMirrored.Outlined.MenuBook
+    MainTab.GUIDE -> ImageVector.vectorResource(R.drawable.ic_menu_book)
     MainTab.SETTINGS -> if (selected) Icons.Rounded.Settings else Icons.Outlined.Settings
 }

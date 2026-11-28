@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@raw/ad_wait_bn,@raw/ad_wait_en,@raw/ad_wait_hi,@xml/accessibility_service_config,@font/plus_jakarta_sans,@font/atkinson_hyperlegible" />

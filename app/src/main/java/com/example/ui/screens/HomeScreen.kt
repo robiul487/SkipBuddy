@@ -21,16 +21,9 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.VolumeOff
-import androidx.compose.material.icons.rounded.Cancel
 import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material.icons.rounded.FastForward
-import androidx.compose.material.icons.rounded.PauseCircleFilled
-import androidx.compose.material.icons.rounded.PlayCircleFilled
-import androidx.compose.material.icons.rounded.Radar
-import androidx.compose.material.icons.rounded.Shield
-import androidx.compose.material.icons.rounded.WarningAmber
+import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -48,6 +41,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -252,9 +246,9 @@ private fun ServiceStatusCard(
             ) {
                 Icon(
                     imageVector = when {
-                        !serviceOn -> Icons.Rounded.ErrorOutline
-                        autoSkipEnabled -> Icons.Rounded.Shield
-                        else -> Icons.Rounded.PauseCircleFilled
+                        !serviceOn -> ImageVector.vectorResource(R.drawable.ic_error_outline)
+                        autoSkipEnabled -> ImageVector.vectorResource(R.drawable.ic_shield)
+                        else -> ImageVector.vectorResource(R.drawable.ic_pause_circle)
                     },
                     contentDescription = stringResource(titleRes),
                     tint = Color.White,
@@ -291,7 +285,7 @@ private fun EnableWarningCard(onEnableClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
-                imageVector = Icons.Rounded.WarningAmber,
+                imageVector = Icons.Rounded.Warning,
                 contentDescription = stringResource(R.string.warning_enable_title),
                 tint = StatusOffRed,
                 modifier = Modifier.size(28.dp)
@@ -360,9 +354,9 @@ private fun PauseResumeAutoSkipCard(
         ) {
             Icon(
                 imageVector = if (autoSkipEnabled) {
-                    Icons.Rounded.PauseCircleFilled
+                    ImageVector.vectorResource(R.drawable.ic_pause_circle)
                 } else {
-                    Icons.Rounded.PlayCircleFilled
+                    ImageVector.vectorResource(R.drawable.ic_play_circle)
                 },
                 contentDescription = null,
                 modifier = Modifier.size(26.dp)
@@ -406,7 +400,7 @@ private fun DashboardStatsSection(
                 todayValue = todayStats.detected.toString(),
                 totalValue = totalDetected.toString(),
                 detailLine = null,
-                icon = Icons.Rounded.Radar,
+                icon = Icons.Rounded.Search,
                 accentColor = MetricBlue,
                 bgColor = MetricBlueBg,
                 borderColor = MetricBlueBorder,
@@ -418,7 +412,7 @@ private fun DashboardStatsSection(
                 todayValue = todayStats.skipped.toString(),
                 totalValue = totalSkipped.toString(),
                 detailLine = null,
-                icon = Icons.Rounded.FastForward,
+                icon = ImageVector.vectorResource(R.drawable.ic_fast_forward),
                 accentColor = MetricGreen,
                 bgColor = MetricGreenBg,
                 borderColor = MetricGreenBorder,
@@ -441,7 +435,7 @@ private fun DashboardStatsSection(
                     totalUnskippable,
                     totalFailed
                 ),
-                icon = Icons.Rounded.Cancel,
+                icon = ImageVector.vectorResource(R.drawable.ic_cancel),
                 accentColor = MetricRed,
                 bgColor = MetricRedBg,
                 borderColor = MetricRedBorder,
@@ -456,7 +450,7 @@ private fun DashboardStatsSection(
                     R.string.stat_muted_time_label,
                     LocaleHelper.formatDurationMmSs(totalMutedSeconds)
                 ),
-                icon = Icons.AutoMirrored.Rounded.VolumeOff,
+                icon = ImageVector.vectorResource(R.drawable.ic_volume_off),
                 accentColor = MetricOrange,
                 bgColor = MetricOrangeBg,
                 borderColor = MetricOrangeBorder,
@@ -736,13 +730,13 @@ private fun RecentActivityRowCard(
             R.string.outcome_skipped
         )
         AdOutcome.UNSKIPPABLE -> Quadruple(
-            Icons.AutoMirrored.Rounded.VolumeOff,
+            ImageVector.vectorResource(R.drawable.ic_volume_off),
             MetricOrange,
             MetricOrangeBg,
             R.string.outcome_unskippable
         )
         AdOutcome.FAILED -> Quadruple(
-            Icons.Rounded.Cancel,
+            ImageVector.vectorResource(R.drawable.ic_cancel),
             MetricRed,
             MetricRedBg,
             R.string.outcome_failed
