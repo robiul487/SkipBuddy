@@ -68,6 +68,7 @@ import com.example.ui.theme.TextSecondary
 fun SettingsScreen(
     uiState: SkipBuddyUiState,
     onSetAutoSkip: (Boolean) -> Unit,
+    onSetYoutubeMusicEnabled: (Boolean) -> Unit,
     onSetClickDelay: (ClickDelayOption) -> Unit,
     onSetMuteUnskippable: (Boolean) -> Unit,
     onSetFloatingVisibility: (FloatingVisibility) -> Unit,
@@ -127,6 +128,16 @@ fun SettingsScreen(
                     enabled = false,
                     onCheckedChange = {},
                     testTag = "switch_youtube_only_locked"
+                )
+
+                HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp), color = BorderHairline)
+
+                LargeToggleRow(
+                    title = stringResource(R.string.settings_youtube_music),
+                    subtitle = stringResource(R.string.settings_youtube_music_desc),
+                    checked = prefs.youtubeMusicEnabled,
+                    onCheckedChange = onSetYoutubeMusicEnabled,
+                    testTag = "switch_youtube_music"
                 )
 
                 HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp), color = BorderHairline)

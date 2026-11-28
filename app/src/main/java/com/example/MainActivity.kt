@@ -327,6 +327,7 @@ private fun SkipBuddyMainShell(
                         MainTab.SETTINGS -> SettingsScreen(
                             uiState = uiState,
                             onSetAutoSkip = viewModel::setAutoSkipEnabled,
+                            onSetYoutubeMusicEnabled = viewModel::setYoutubeMusicEnabled,
                             onSetClickDelay = viewModel::setClickDelay,
                             onSetMuteUnskippable = viewModel::setMuteUnskippableAds,
                             onSetFloatingVisibility = viewModel::setFloatingVisibility,

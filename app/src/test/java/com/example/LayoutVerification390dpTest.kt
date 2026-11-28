@@ -14,9 +14,12 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.unit.dp
 import androidx.test.core.app.ApplicationProvider
+import com.example.model.AdOutcome
 import com.example.model.AppLanguage
 import com.example.model.PermissionStatusState
+import com.example.model.RecentActivityEntry
 import com.example.model.SkipBuddyPreferences
+import com.example.model.SupportedApp
 import com.example.ui.SkipBuddyUiState
 import com.example.ui.screens.GuideScreen
 import com.example.ui.screens.HomeScreen
@@ -46,10 +49,26 @@ class LayoutVerification390dpTest {
     val composeRule = createComposeRule()
 
     @Test
-    fun defaultLanguage_isEnglish_withEnglishAudio() {
+    fun defaultLanguage_isEnglish_withEnglishAudio_andYoutubeMusicEnabledByDefault() {
         val prefs = SkipBuddyPreferences()
         assertEquals(AppLanguage.ENGLISH, prefs.appLanguage)
         assertEquals(R.raw.ad_wait_en, prefs.appLanguage.resolveAudioRes())
+        assertTrue(prefs.youtubeMusicEnabled)
+    }
+
+    @Test
+    fun v3Strings_referenceYoutubeAndYoutubeMusicInAllThreeLanguages() {
+        val baseCtx = ApplicationProvider.getApplicationContext<Context>()
+        for (lang in listOf(AppLanguage.ENGLISH, AppLanguage.BANGLA, AppLanguage.HINDI)) {
+            val ctx = LocaleHelper.createLocalizedContext(baseCtx, lang)
+            val step2Title = ctx.getString(R.string.guide_step_2_title)
+            val aboutPrivacy = ctx.getString(R.string.about_privacy_text)
+            val supportedApps = ctx.getString(R.string.settings_only_youtube)
+            assertTrue("Guide step 2 in $lang must mention YouTube Music: $step2Title", step2Title.contains("YouTube Music"))
+            assertTrue("About privacy in $lang must mention YouTube Music: $aboutPrivacy", aboutPrivacy.contains("YouTube Music"))
+            assertTrue("About privacy in $lang must list both packages: $aboutPrivacy", aboutPrivacy.contains("com.google.android.apps.youtube.music"))
+            assertTrue("Supported apps row in $lang must mention YouTube + YouTube Music: $supportedApps", supportedApps.contains("YouTube + YouTube Music"))
+        }
     }
 
     @Test
@@ -136,7 +155,13 @@ class LayoutVerification390dpTest {
         val baseCtx = ApplicationProvider.getApplicationContext<Context>()
         val locCtx = LocaleHelper.createLocalizedContext(baseCtx, lang)
         val state = SkipBuddyUiState(
-            preferences = SkipBuddyPreferences(appLanguage = lang),
+            preferences = SkipBuddyPreferences(
+                appLanguage = lang,
+                recentActivity = listOf(
+                    RecentActivityEntry(1_700_000_000_000L, AdOutcome.SKIPPED, SupportedApp.YOUTUBE_MUSIC),
+                    RecentActivityEntry(1_700_000_050_000L, AdOutcome.UNSKIPPABLE, SupportedApp.YOUTUBE)
+                )
+            ),
             permissions = PermissionStatusState(accessibilityGranted = false),
             preferencesLoaded = true
         )
@@ -165,6 +190,11 @@ class LayoutVerification390dpTest {
         composeRule.waitForIdle()
         composeRule.onNodeWithTag("home_restricted_help").assertIsDisplayed()
         composeRule.onNodeWithTag("home_restricted_help_open_app_settings").assertIsDisplayed()
+
+        composeRule.onNodeWithTag("home_list")
+            .performScrollToNode(hasTestTag("recent_activity_row_0"))
+        composeRule.waitForIdle()
+        composeRule.onNodeWithTag("recent_activity_row_0").assertIsDisplayed()
     }
 
     @Test
@@ -238,6 +268,7 @@ class LayoutVerification390dpTest {
                     SettingsScreen(
                         uiState = state,
                         onSetAutoSkip = {},
+                        onSetYoutubeMusicEnabled = {},
                         onSetClickDelay = {},
                         onSetMuteUnskippable = {},
                         onSetFloatingVisibility = {},
@@ -270,6 +301,7 @@ class LayoutVerification390dpTest {
 
         val card1Bounds = composeRule.onNodeWithTag("settings_card_1").getUnclippedBoundsInRoot()
         assertTrue("Settings Card 1 fits 390dp width in $lang", card1Bounds.right <= 391.dp)
+        composeRule.onNodeWithTag("switch_youtube_music").assertIsDisplayed()
 
         composeRule.onNodeWithTag("settings_list")
             .performScrollToNode(hasTestTag("settings_card_4"))

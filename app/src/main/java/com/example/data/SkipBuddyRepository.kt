@@ -21,6 +21,7 @@ import com.example.model.FloatingVisibility
 import com.example.model.RecentActivityEntry
 import com.example.model.SkipBuddyPreferences
 import com.example.model.SkipFeedbackMode
+import com.example.model.SupportedApp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -49,6 +50,7 @@ class SkipBuddyRepository private constructor(private val appContext: Context) {
     val preferencesFlow: Flow<SkipBuddyPreferences> = dataStore.data.map { prefs ->
         SkipBuddyPreferences(
             autoSkipEnabled = prefs[KEY_AUTO_SKIP] ?: true,
+            youtubeMusicEnabled = prefs[KEY_YOUTUBE_MUSIC_ENABLED] ?: true,
             clickDelay = ClickDelayOption.fromName(prefs[KEY_CLICK_DELAY]),
             muteUnskippableAds = prefs[KEY_MUTE_UNSKIPPABLE] ?: true,
 
@@ -83,6 +85,10 @@ class SkipBuddyRepository private constructor(private val appContext: Context) {
 
     suspend fun setAutoSkipEnabled(enabled: Boolean) {
         dataStore.edit { it[KEY_AUTO_SKIP] = enabled }
+    }
+
+    suspend fun setYoutubeMusicEnabled(enabled: Boolean) {
+        dataStore.edit { it[KEY_YOUTUBE_MUSIC_ENABLED] = enabled }
     }
 
     suspend fun setClickDelay(option: ClickDelayOption) {
@@ -195,6 +201,7 @@ class SkipBuddyRepository private constructor(private val appContext: Context) {
     suspend fun recordAdSessionOutcome(
         outcome: AdOutcome,
         mutedSeconds: Long,
+        app: SupportedApp = SupportedApp.YOUTUBE,
         nowMs: Long = System.currentTimeMillis()
     ) {
         val dateKey = dateKeyFor(nowMs)
@@ -237,7 +244,7 @@ class SkipBuddyRepository private constructor(private val appContext: Context) {
             }
 
             val recent = decodeRecentActivity(prefs[KEY_RECENT_ACTIVITY]).toMutableList()
-            recent.add(0, RecentActivityEntry(timestampMs = nowMs, outcome = outcome))
+            recent.add(0, RecentActivityEntry(timestampMs = nowMs, outcome = outcome, app = app))
             val trimmed = recent.take(MAX_RECENT_ENTRIES)
             prefs[KEY_RECENT_ACTIVITY] = encodeRecentActivity(trimmed)
         }
@@ -283,6 +290,7 @@ class SkipBuddyRepository private constructor(private val appContext: Context) {
         private const val MAX_DAILY_HISTORY_DAYS = 30
 
         private val KEY_AUTO_SKIP = booleanPreferencesKey("auto_skip_enabled")
+        private val KEY_YOUTUBE_MUSIC_ENABLED = booleanPreferencesKey("youtube_music_enabled")
         private val KEY_CLICK_DELAY = stringPreferencesKey("click_delay")
         private val KEY_MUTE_UNSKIPPABLE = booleanPreferencesKey("mute_unskippable_ads")
 
@@ -373,16 +381,17 @@ class SkipBuddyRepository private constructor(private val appContext: Context) {
         }
 
         internal fun encodeRecentActivity(list: List<RecentActivityEntry>): String {
-            return list.joinToString(";") { "${it.timestampMs}:${it.outcome.name}" }
+            return list.joinToString(";") { "${it.timestampMs}:${it.outcome.name}:${it.app.name}" }
         }
 
         internal fun decodeRecentActivity(raw: String?): List<RecentActivityEntry> {
             if (raw.isNullOrBlank()) return emptyList()
             return raw.split(";").mapNotNull { entry ->
                 val parts = entry.split(":")
-                if (parts.size == 2) {
+                if (parts.size >= 2) {
                     val ts = parts[0].toLongOrNull() ?: return@mapNotNull null
-                    RecentActivityEntry(ts, AdOutcome.fromName(parts[1]))
+                    val app = if (parts.size >= 3) SupportedApp.fromName(parts[2]) else SupportedApp.YOUTUBE
+                    RecentActivityEntry(ts, AdOutcome.fromName(parts[1]), app)
                 } else {
                     null
                 }

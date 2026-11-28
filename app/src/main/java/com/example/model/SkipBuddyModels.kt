@@ -152,9 +152,32 @@ enum class AdOutcome {
     }
 }
 
+enum class SupportedApp(
+    val packageName: String,
+    @StringRes val labelRes: Int
+) {
+    YOUTUBE(
+        packageName = "com.google.android.youtube",
+        labelRes = R.string.app_source_youtube
+    ),
+    YOUTUBE_MUSIC(
+        packageName = "com.google.android.apps.youtube.music",
+        labelRes = R.string.app_source_youtube_music
+    );
+
+    companion object {
+        fun fromPackage(packageName: String?): SupportedApp =
+            if (packageName == YOUTUBE_MUSIC.packageName) YOUTUBE_MUSIC else YOUTUBE
+
+        fun fromName(name: String?): SupportedApp =
+            entries.firstOrNull { it.name == name } ?: YOUTUBE
+    }
+}
+
 data class RecentActivityEntry(
     val timestampMs: Long,
-    val outcome: AdOutcome
+    val outcome: AdOutcome,
+    val app: SupportedApp = SupportedApp.YOUTUBE
 )
 
 data class DailyStats(
@@ -178,6 +201,7 @@ data class PermissionStatusState(
 data class SkipBuddyPreferences(
     // Card 1: Auto-Skip
     val autoSkipEnabled: Boolean = true,
+    val youtubeMusicEnabled: Boolean = true,
     val clickDelay: ClickDelayOption = ClickDelayOption.INSTANT,
     val muteUnskippableAds: Boolean = true,
 

@@ -112,6 +112,10 @@ class SkipBuddyViewModel(application: Application) : AndroidViewModel(applicatio
         viewModelScope.launch { repository.setAutoSkipEnabled(enabled) }
     }
 
+    fun setYoutubeMusicEnabled(enabled: Boolean) {
+        viewModelScope.launch { repository.setYoutubeMusicEnabled(enabled) }
+    }
+
     fun setClickDelay(option: ClickDelayOption) {
         viewModelScope.launch { repository.setClickDelay(option) }
     }

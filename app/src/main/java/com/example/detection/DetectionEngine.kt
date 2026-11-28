@@ -24,6 +24,15 @@ import java.util.Locale
 object DetectionEngine {
 
     const val YOUTUBE_PACKAGE = "com.google.android.youtube"
+    const val YOUTUBE_MUSIC_PACKAGE = "com.google.android.apps.youtube.music"
+
+    fun isPackageAllowed(packageName: String?, youtubeMusicEnabled: Boolean): Boolean {
+        return when (packageName) {
+            YOUTUBE_PACKAGE -> true
+            YOUTUBE_MUSIC_PACKAGE -> youtubeMusicEnabled
+            else -> false
+        }
+    }
 
     // Step 0: Language-neutral Skip View IDs (checked first)
     private val SKIP_VIEW_ID_SUBSTRINGS = listOf(

@@ -29,6 +29,7 @@ import com.example.detection.ScanAnalysis
 import com.example.model.AdOutcome
 import com.example.model.SkipBuddyPreferences
 import com.example.model.SkipFeedbackMode
+import com.example.model.SupportedApp
 import com.example.util.AnnouncementAudioPlayer
 import com.example.util.LocaleHelper
 import com.example.util.NotificationHelper
@@ -41,13 +42,14 @@ import kotlinx.coroutines.launch
 
 /**
  * Core Accessibility Service implementing Detection v2 + Language Priority Cascade:
- * - Strictly inspects ONLY com.google.android.youtube.
- * - Adaptive polling: 500ms normal while YouTube is foreground, ~300ms while Ad State active/suspected.
+ * - Strictly inspects ONLY com.google.android.youtube and (when enabled)
+ *   com.google.android.apps.youtube.music.
+ * - Adaptive polling: 500ms normal while a supported app is foreground, ~300ms while Ad State active/suspected.
  * - 900ms anti-flicker before ending an Ad Session.
- * - Exact per-ad-session counting (Detected +1 at start; Skipped / Unskippable / Failed at end).
+ * - Exact per-ad-session counting (Detected +1 at start; Skipped / Unskippable / Failed at end with app source).
  * - Mute Unskippable Ads with exact previous STREAM_MUSIC volume save & restore (never overrides manual mute).
  * - Bundled MP3 voice announcement on USAGE_ASSISTANCE_ACCESSIBILITY stream (no TextToSpeech).
- * - Live dynamic reaction to every DataStore toggle with zero restart required.
+ * - Live dynamic reaction to every DataStore toggle (including YouTube Music ON/OFF) with zero restart required.
  */
 class SkipBuddyAccessibilityService : AccessibilityService() {
 
@@ -62,10 +64,13 @@ class SkipBuddyAccessibilityService : AccessibilityService() {
     @Volatile
     private var currentPrefs: SkipBuddyPreferences = SkipBuddyPreferences()
 
-    private var isYouTubeForeground: Boolean = false
+    private var activeTargetPackage: String? = null
+    private val isSupportedAppForeground: Boolean
+        get() = activeTargetPackage != null
 
     // Ad Session State Machine
     private var inAdSession: Boolean = false
+    private var sessionApp: SupportedApp = SupportedApp.YOUTUBE
     private var adSuspected: Boolean = false
     private var adAbsentSinceElapsedMs: Long = 0L
     private var skipEverAvailableInSession: Boolean = false
@@ -86,8 +91,9 @@ class SkipBuddyAccessibilityService : AccessibilityService() {
 
     private val pollRunnable = object : Runnable {
         override fun run() {
-            if (!isYouTubeForeground) return
-            scanActiveYouTubeWindow(triggerSource = "poll")
+            if (!isSupportedAppForeground) return
+            scanActiveTargetWindow(triggerSource = "poll")
+            if (!isSupportedAppForeground) return
             val interval = if (inAdSession || adSuspected) POLL_INTERVAL_AD_MS else POLL_INTERVAL_NORMAL_MS
             mainHandler.postDelayed(this, interval)
         }
@@ -127,6 +133,13 @@ class SkipBuddyAccessibilityService : AccessibilityService() {
         currentPrefs = updated
         overlayController.updatePreferences(updated)
 
+        // Dynamic live rule: turning YouTube Music OFF immediately removes it from the active gate
+        if (!updated.youtubeMusicEnabled &&
+            activeTargetPackage == DetectionEngine.YOUTUBE_MUSIC_PACKAGE
+        ) {
+            leaveSupportedForeground()
+        }
+
         // Dynamic live rule: turning Mute OFF mid-ad IMMEDIATELY restores saved volume
         if (!updated.muteUnskippableAds && mutedBySkipBuddy) {
             restoreMusicVolumeIfMutedByUs()
@@ -145,65 +158,78 @@ class SkipBuddyAccessibilityService : AccessibilityService() {
         }
     }
 
+    private fun isAllowedPackage(pkg: String?): Boolean {
+        return DetectionEngine.isPackageAllowed(pkg, currentPrefs.youtubeMusicEnabled)
+    }
+
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null) return
         val pkg = event.packageName?.toString()
 
         // LAYER 1 PACKAGE GATE:
-        // Never read or inspect nodes of any non-YouTube package!
-        if (pkg != DetectionEngine.YOUTUBE_PACKAGE) {
+        // Never read or inspect nodes of any package outside YouTube (+ YouTube Music when enabled).
+        if (!isAllowedPackage(pkg)) {
             if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
-                handleNonYouTubeWindowState(pkg)
+                handleNonAllowedWindowState(pkg)
             }
             return
         }
 
-        // YouTube is foreground
-        if (!isYouTubeForeground) {
-            enterYouTubeForeground()
+        // Supported app (YouTube or enabled YouTube Music) is foreground
+        val allowedPkg = pkg!!
+        if (activeTargetPackage != allowedPkg) {
+            if (inAdSession) {
+                finalizeAdSessionAsNonSkipped()
+            }
+            enterSupportedForeground(allowedPkg)
         }
 
         if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED ||
             event.eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED
         ) {
-            scanActiveYouTubeWindow(triggerSource = "event:${event.eventType}")
+            scanActiveTargetWindow(triggerSource = "event:${event.eventType}")
         }
     }
 
-    private fun handleNonYouTubeWindowState(pkg: String?) {
-        if (!isYouTubeForeground) return
-        // Ignore transient SystemUI overlays (e.g. volume bar) ONLY if YouTube is still an active app window
+    private fun handleNonAllowedWindowState(pkg: String?) {
+        if (!isSupportedAppForeground) return
+        // Ignore transient SystemUI overlays (e.g. volume bar) ONLY if a supported app window is still active
         if (pkg == "com.android.systemui" || pkg == packageName) {
-            if (isYouTubeStillAnActiveApplicationWindow()) {
+            val activeAllowed = findActiveAllowedApplicationPackage()
+            if (activeAllowed != null) {
+                activeTargetPackage = activeAllowed
                 return
             }
         }
-        leaveYouTubeForeground()
+        leaveSupportedForeground()
     }
 
-    private fun isYouTubeStillAnActiveApplicationWindow(): Boolean {
+    private fun findActiveAllowedApplicationPackage(): String? {
         val activeRootPkg = rootInActiveWindow?.packageName?.toString()
-        if (activeRootPkg == DetectionEngine.YOUTUBE_PACKAGE) return true
+        if (isAllowedPackage(activeRootPkg)) return activeRootPkg
         return runCatching {
-            windows?.any { win ->
+            windows?.firstOrNull { win ->
                 win.type == AccessibilityWindowInfo.TYPE_APPLICATION &&
-                    win.root?.packageName?.toString() == DetectionEngine.YOUTUBE_PACKAGE
-            } == true
-        }.getOrDefault(false)
+                    isAllowedPackage(win.root?.packageName?.toString())
+            }?.root?.packageName?.toString()
+        }.getOrNull()
     }
 
-    private fun enterYouTubeForeground() {
-        isYouTubeForeground = true
-        overlayController.setYouTubeForeground(true)
+    private fun enterSupportedForeground(pkg: String) {
+        val wasForeground = isSupportedAppForeground
+        activeTargetPackage = pkg
+        if (!wasForeground) {
+            overlayController.setSupportedAppForeground(true)
+        }
         mainHandler.removeCallbacks(pollRunnable)
         mainHandler.postDelayed(pollRunnable, POLL_INTERVAL_NORMAL_MS)
     }
 
-    private fun leaveYouTubeForeground() {
-        isYouTubeForeground = false
+    private fun leaveSupportedForeground() {
+        activeTargetPackage = null
         mainHandler.removeCallbacks(pollRunnable)
         cancelPendingClickAndVerify()
-        overlayController.setYouTubeForeground(false)
+        overlayController.setSupportedAppForeground(false)
         announcementPlayer.stop()
         if (inAdSession) {
             finalizeAdSessionAsNonSkipped()
@@ -236,11 +262,25 @@ class SkipBuddyAccessibilityService : AccessibilityService() {
         super.onDestroy()
     }
 
-    private fun scanActiveYouTubeWindow(triggerSource: String) {
-        val root = rootInActiveWindow ?: return
-        if (root.packageName?.toString() != DetectionEngine.YOUTUBE_PACKAGE) {
-            leaveYouTubeForeground()
+    private fun scanActiveTargetWindow(triggerSource: String) {
+        val root = rootInActiveWindow
+        val rootPkg = root?.packageName?.toString()
+        if (root == null || !isAllowedPackage(rootPkg)) {
+            if ((rootPkg == "com.android.systemui" || rootPkg == packageName) &&
+                findActiveAllowedApplicationPackage() != null
+            ) {
+                return
+            }
+            leaveSupportedForeground()
             return
+        }
+
+        val allowedPkg = rootPkg!!
+        if (activeTargetPackage != allowedPkg) {
+            if (inAdSession) {
+                finalizeAdSessionAsNonSkipped()
+            }
+            activeTargetPackage = allowedPkg
         }
 
         val liveNodes = ArrayList<AccessibilityNodeInfo>(64)
@@ -255,7 +295,7 @@ class SkipBuddyAccessibilityService : AccessibilityService() {
 
         val nowElapsed = SystemClock.elapsedRealtime()
         maybeWriteDebugLog(triggerSource, analysis, snapshots, nowElapsed)
-        processScanAnalysis(analysis, liveNodes, nowElapsed)
+        processScanAnalysis(analysis, liveNodes, SupportedApp.fromPackage(allowedPkg), nowElapsed)
     }
 
     private fun collectNodeTree(
@@ -299,16 +339,17 @@ class SkipBuddyAccessibilityService : AccessibilityService() {
     private fun processScanAnalysis(
         analysis: ScanAnalysis,
         liveNodes: List<AccessibilityNodeInfo>,
+        currentApp: SupportedApp,
         nowElapsed: Long
     ) {
         val prefs = currentPrefs
         adSuspected = analysis.adState == AdState.AD_ACTIVE || analysis.weakSignals.isNotEmpty()
 
-        // Sponsored ALONE (OVERLAY_SPONSORED) -> NO mute, NO announcement, NO action in v1.
+        // Sponsored ALONE (OVERLAY_SPONSORED) -> NO mute, NO announcement, NO action.
         if (analysis.adState == AdState.AD_ACTIVE) {
             adAbsentSinceElapsedMs = 0L
             if (!inAdSession) {
-                startNewAdSession()
+                startNewAdSession(currentApp)
             }
 
             if (analysis.hasClickableSkip) {
@@ -351,15 +392,16 @@ class SkipBuddyAccessibilityService : AccessibilityService() {
         }
     }
 
-    private fun startNewAdSession() {
+    private fun startNewAdSession(app: SupportedApp) {
         inAdSession = true
+        sessionApp = app
         adAbsentSinceElapsedMs = 0L
         skipEverAvailableInSession = false
         announcementPlayedInSession = false
         retryCountInSession = 0
         sessionMutedAccumulatedMs = 0L
 
-        // Per-ad-session counting: Detected +1 ONCE at session start
+        // Per-ad-session counting: Detected +1 ONCE at session start (combined across both apps)
         serviceScope.launch {
             repository.recordAdSessionStart()
         }
@@ -368,7 +410,7 @@ class SkipBuddyAccessibilityService : AccessibilityService() {
     private fun scheduleSkipClick(targetNode: AccessibilityNodeInfo, delayMs: Long) {
         val clickAction = Runnable {
             pendingClickRunnable = null
-            if (!isYouTubeForeground || !currentPrefs.autoSkipEnabled || !inAdSession) return@Runnable
+            if (!isSupportedAppForeground || !currentPrefs.autoSkipEnabled || !inAdSession) return@Runnable
             val now = SystemClock.elapsedRealtime()
             if ((now - lastClickElapsedMs) < MIN_CLICK_DEBOUNCE_MS) return@Runnable
 
@@ -396,7 +438,7 @@ class SkipBuddyAccessibilityService : AccessibilityService() {
 
     private fun findAndClickFreshSkipNode(): Boolean {
         val root = rootInActiveWindow ?: return false
-        if (root.packageName?.toString() != DetectionEngine.YOUTUBE_PACKAGE) return false
+        if (!isAllowedPackage(root.packageName?.toString())) return false
         val liveNodes = ArrayList<AccessibilityNodeInfo>(64)
         val snapshots = ArrayList<NodeSnapshot>(64)
         collectNodeTree(root, -1, liveNodes, snapshots)
@@ -468,7 +510,7 @@ class SkipBuddyAccessibilityService : AccessibilityService() {
             pendingVerifyRunnable = null
             if (!inAdSession) return@Runnable
             val root = rootInActiveWindow
-            val stillAd = if (root != null && root.packageName?.toString() == DetectionEngine.YOUTUBE_PACKAGE) {
+            val stillAd = if (root != null && isAllowedPackage(root.packageName?.toString())) {
                 val liveNodes = ArrayList<AccessibilityNodeInfo>(64)
                 val snapshots = ArrayList<NodeSnapshot>(64)
                 collectNodeTree(root, -1, liveNodes, snapshots)
@@ -495,6 +537,7 @@ class SkipBuddyAccessibilityService : AccessibilityService() {
         restoreMusicVolumeIfMutedByUs()
 
         val mutedSecs = (sessionMutedAccumulatedMs / 1000L)
+        val completedApp = sessionApp
         resetSessionFlags()
 
         triggerSkipFeedback()
@@ -502,7 +545,8 @@ class SkipBuddyAccessibilityService : AccessibilityService() {
         serviceScope.launch {
             repository.recordAdSessionOutcome(
                 outcome = AdOutcome.SKIPPED,
-                mutedSeconds = mutedSecs
+                mutedSeconds = mutedSecs,
+                app = completedApp
             )
         }
     }
@@ -520,12 +564,14 @@ class SkipBuddyAccessibilityService : AccessibilityService() {
             AdOutcome.UNSKIPPABLE
         }
         val mutedSecs = (sessionMutedAccumulatedMs / 1000L)
+        val completedApp = sessionApp
         resetSessionFlags()
 
         serviceScope.launch {
             repository.recordAdSessionOutcome(
                 outcome = outcome,
-                mutedSeconds = mutedSecs
+                mutedSeconds = mutedSecs,
+                app = completedApp
             )
         }
     }

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SkipBuddy</string>
-    <string name="accessibility_service_description">SkipBuddy আপনার জন্য YouTube-এ স্বয়ংক্রিয়ভাবে বিজ্ঞাপন এড়িয়ে যায়।</string>
+    <string name="accessibility_service_description">SkipBuddy আপনার জন্য YouTube এবং YouTube Music-এ স্বয়ংক্রিয়ভাবে বিজ্ঞাপন এড়িয়ে যায়।</string>
 
     <!-- Navigation -->
     <string name="nav_home">হোম</string>
@@ -9,7 +9,7 @@
 
     <!-- Home Status & Controls -->
     <string name="service_status_on_title">SkipBuddy চালু আছে</string>
-    <string name="service_status_on_subtitle">YouTube-এ বিজ্ঞাপন স্বয়ংক্রিয়ভাবে স্কিপ করার জন্য প্রস্তুত।</string>
+    <string name="service_status_on_subtitle">YouTube এবং YouTube Music-এ বিজ্ঞাপন স্বয়ংক্রিয়ভাবে স্কিপ করার জন্য প্রস্তুত।</string>
     <string name="service_status_paused_title">SkipBuddy বিরতিতে আছে</string>
     <string name="service_status_paused_subtitle">সার্ভিস চালু আছে, তবে নিচে অটো-স্কিপ বন্ধ করা আছে।</string>
     <string name="service_status_off_title">SkipBuddy বন্ধ আছে</string>
@@ -45,19 +45,21 @@
     <string name="chart_today_short">আজ</string>
 
     <string name="recent_activity_title">সাম্প্রতিক কার্যক্রম</string>
-    <string name="recent_activity_empty">এখনো কোনো বিজ্ঞাপন রেকর্ড হয়নি। YouTube খুললে SkipBuddy নিজেই কাজ করবে।</string>
+    <string name="recent_activity_empty">এখনো কোনো বিজ্ঞাপন রেকর্ড হয়নি। YouTube বা YouTube Music খুললে SkipBuddy নিজেই কাজ করবে।</string>
+    <string name="app_source_youtube">YouTube</string>
+    <string name="app_source_youtube_music">YouTube Music</string>
     <string name="outcome_skipped">স্কিপ করা হয়েছে</string>
     <string name="outcome_unskippable">স্কিপ-অযোগ্য (মিউট)</string>
     <string name="outcome_failed">স্কিপ ব্যর্থ হয়েছে</string>
 
     <!-- Guide Tab -->
     <string name="guide_title">SkipBuddy কীভাবে কাজ করে</string>
-    <string name="guide_caregiver_note">আপনি একবার SkipBuddy সেটআপ করে বাটনটি লুকিয়ে ও লক করে রাখুন — আপনার বাবা শুধু YouTube দেখবেন, SkipBuddy-তে কখনো হাত দিতে হবে না।</string>
+    <string name="guide_caregiver_note">আপনি একবার SkipBuddy সেটআপ করে বাটনটি লুকিয়ে ও লক করে রাখুন — আপনার বাবা শুধু YouTube এবং YouTube Music ব্যবহার করবেন, SkipBuddy-তে কখনো হাত দিতে হবে না।</string>
     <string name="button_reopen_wizard">সেটআপ উইজার্ড খুলুন</string>
     <string name="guide_step_1_title">১. Accessibility চালু করুন</string>
     <string name="guide_step_1_body">Accessibility সেটিংস খুলে SkipBuddy খুঁজে চালু করুন।</string>
-    <string name="guide_step_2_title">২. YouTube খুলুন</string>
-    <string name="guide_step_2_body">যেকোনো ভিডিও পোর্ট্রেট, ল্যান্ডস্কেপ বা ফুলস্ক্রিনে দেখুন।</string>
+    <string name="guide_step_2_title">২. YouTube এবং YouTube Music খুলুন</string>
+    <string name="guide_step_2_body">YouTube এবং YouTube Music-এ যেকোনো ভিডিও বা গান পোর্ট্রেট, ল্যান্ডস্কেপ বা ফুলস্ক্রিনে চালান।</string>
     <string name="guide_step_3_title">৩. বিজ্ঞাপন নিজে থেকেই স্কিপ হবে</string>
     <string name="guide_step_3_body">Skip Ad বাটন এলেই SkipBuddy নিজে ক্লিক করবে এবং স্কিপ-অযোগ্য বিজ্ঞাপন মিউট রাখবে।</string>
 
@@ -69,9 +71,9 @@
     <string name="button_open">খুলুন</string>
 
     <string name="perm_accessibility_title">Accessibility সার্ভিস</string>
-    <string name="perm_accessibility_desc">শুধুমাত্র YouTube-এ Skip Ad খুঁজে ক্লিক করার জন্য।</string>
+    <string name="perm_accessibility_desc">শুধুমাত্র YouTube এবং YouTube Music-এ Skip Ad খুঁজে ক্লিক করার জন্য।</string>
     <string name="perm_overlay_title">অন্য অ্যাপের উপরে দেখান</string>
-    <string name="perm_overlay_desc">শুধুমাত্র YouTube-এ ফ্লোটিং বাটন ও বিজ্ঞাপন বার্তা দেখানোর জন্য।</string>
+    <string name="perm_overlay_desc">YouTube এবং YouTube Music-এ ফ্লোটিং বাটন ও বিজ্ঞাপন বার্তা দেখানোর জন্য।</string>
     <string name="perm_battery_title">ব্যাটারি অপটিমাইজেশন</string>
     <string name="perm_battery_desc">ব্যাকগ্রাউন্ডে SkipBuddy যেন বন্ধ না হয় তা নিশ্চিত করে।</string>
     <string name="perm_notifications_title">নোটিফিকেশন</string>
@@ -91,9 +93,9 @@
     <string name="wizard_finish">সম্পন্ন</string>
 
     <string name="wizard_step_accessibility_title">Accessibility সার্ভিস চালু করুন</string>
-    <string name="wizard_step_accessibility_body">YouTube-এর বিজ্ঞাপন চিনতে এবং Skip Ad ক্লিক করতে এটি আবশ্যক।</string>
+    <string name="wizard_step_accessibility_body">YouTube এবং YouTube Music-এর বিজ্ঞাপন চিনতে এবং Skip Ad ক্লিক করতে এটি আবশ্যক।</string>
     <string name="wizard_step_overlay_title">অন্য অ্যাপের উপরে দেখানোর অনুমতি দিন</string>
-    <string name="wizard_step_overlay_body">YouTube চলাকালীন ফ্লোটিং বাটন এবং অপেক্ষার বার্তা দেখাতে সাহায্য করে।</string>
+    <string name="wizard_step_overlay_body">YouTube এবং YouTube Music চলাকালীন ফ্লোটিং বাটন এবং অপেক্ষার বার্তা দেখাতে সাহায্য করে।</string>
     <string name="wizard_step_battery_title">ব্যাটারি অপটিমাইজেশন বন্ধ করুন</string>
     <string name="wizard_step_battery_body">ফোন যেন ব্যাকগ্রাউন্ডে SkipBuddy বন্ধ করে না দেয়।</string>
     <string name="wizard_step_notifications_title">নোটিফিকেশন অনুমতি দিন</string>
@@ -113,8 +115,10 @@
     <string name="settings_card_autoskip">অটো-স্কিপ</string>
     <string name="settings_master_autoskip">মাস্টার অটো-স্কিপ</string>
     <string name="settings_master_autoskip_desc">Skip Ad বাটন এলে স্বয়ংক্রিয়ভাবে ক্লিক করবে।</string>
-    <string name="settings_only_youtube">শুধুমাত্র YouTube-এ</string>
+    <string name="settings_only_youtube">সমর্থিত অ্যাপ: YouTube + YouTube Music</string>
     <string name="settings_only_youtube_note">নিরাপত্তার জন্য SkipBuddy অন্য কোনো অ্যাপে কাজ করে না।</string>
+    <string name="settings_youtube_music">YouTube Music</string>
+    <string name="settings_youtube_music_desc">YouTube Music-এ স্বয়ংক্রিয়ভাবে বিজ্ঞাপন স্কিপ ও মিউট করুন।</string>
     <string name="settings_click_delay">ক্লিক বিলম্ব</string>
     <string name="delay_instant">তাৎক্ষণিক</string>
     <string name="delay_half_sec">০.৫ সে.</string>
@@ -171,10 +175,10 @@
     <string name="button_reset_all">সব হিসাব রিসেট করুন</string>
     <string name="button_clear_log">সাম্প্রতিক তালিকা মুছুন</string>
     <string name="settings_debug_log">ডিটেকশন ডিবাগ লগ</string>
-    <string name="settings_debug_log_desc">শুধুমাত্র পরীক্ষার জন্য YouTube বিজ্ঞাপনের নোড তথ্য লগ করে।</string>
+    <string name="settings_debug_log_desc">শুধুমাত্র পরীক্ষার জন্য YouTube এবং YouTube Music বিজ্ঞাপনের নোড তথ্য লগ করে।</string>
     <string name="button_share_debug_log">ডিবাগ লগ শেয়ার করুন</string>
     <string name="about_version_format">SkipBuddy সংস্করণ %1$s</string>
-    <string name="about_privacy_text">সম্পূর্ণ অফলাইনে কাজ করে, কোনো ডেটা সংগ্রহ করে না, শুধুমাত্র YouTube (com.google.android.youtube)-এ পোর্ট্রেট, ল্যান্ডস্কেপ ও ফুলস্ক্রিনে কাজ করে।</string>
+    <string name="about_privacy_text">সম্পূর্ণ অফলাইনে কাজ করে, কোনো ডেটা সংগ্রহ করে না, শুধুমাত্র YouTube এবং YouTube Music (com.google.android.youtube, com.google.android.apps.youtube.music)-এ পোর্ট্রেট, ল্যান্ডস্কেপ ও ফুলস্ক্রিনে কাজ করে।</string>
 
     <!-- Announcement phrase -->
     <string name="ad_wait_announcement">বিজ্ঞাপন চলছে, একটু অপেক্ষা করুন</string>
@@ -183,7 +187,7 @@
     <string name="notif_channel_name">SkipBuddy স্ট্যাটাস</string>
     <string name="notif_channel_desc">ফোন রিস্টার্টের পর SkipBuddy বন্ধ থাকলে নীরব রিমাইন্ডার।</string>
     <string name="notif_boot_off_title">SkipBuddy বন্ধ আছে</string>
-    <string name="notif_boot_off_body">YouTube-এর জন্য Accessibility আবার চালু করতে এখানে ট্যাপ করুন।</string>
+    <string name="notif_boot_off_body">YouTube এবং YouTube Music-এর জন্য Accessibility আবার চালু করতে এখানে ট্যাপ করুন।</string>
     <string name="toast_ad_skipped">বিজ্ঞাপন স্কিপ হয়েছে</string>
     <string name="toast_locked_status_active">SkipBuddy চালু আছে (লক করা — অ্যাপ থেকে পরিবর্তন করুন)</string>
     <string name="toast_locked_status_paused">SkipBuddy বিরতিতে আছে (লক করা — অ্যাপ থেকে পরিবর্তন করুন)</string>

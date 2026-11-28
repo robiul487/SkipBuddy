@@ -30,10 +30,11 @@ import com.example.util.PermissionChecker
 import kotlin.math.abs
 
 /**
- * Hosts the YouTube-only floating indicator button and the on-screen ad-wait banner.
+ * Hosts the floating indicator button and the on-screen ad-wait banner for YouTube and YouTube Music.
  *
  * Strictly obeys:
- * - Visible ONLY while YouTube (com.google.android.youtube) is foreground; hidden immediately on leave.
+ * - Visible ONLY while YouTube (com.google.android.youtube) or YouTube Music
+ *   (com.google.android.apps.youtube.music, when enabled) is foreground; hidden immediately on leave.
  * - Visibility modes: SHOW / HIDDEN / AUTO_HIDE (collapses to ~12dp edge sliver after 3s idle).
  * - Lock Mode (default ON): single tap & drag are COMPLETELY IGNORED; deliberate 2-second hold shows
  *   current status ONLY (never pauses or mutates state).
@@ -51,7 +52,7 @@ class FloatingOverlayController(
     private val density = context.resources.displayMetrics.density
 
     private var prefs: SkipBuddyPreferences = SkipBuddyPreferences()
-    private var isYouTubeForeground: Boolean = false
+    private var isSupportedAppForeground: Boolean = false
     private var isCollapsedToSliver: Boolean = false
     private var isFlashingCheckmark: Boolean = false
     private var isBannerRequested: Boolean = false
@@ -75,11 +76,11 @@ class FloatingOverlayController(
         scheduleAutoHideIfNeeded()
     }
 
-    fun setYouTubeForeground(inYouTube: Boolean) {
+    fun setSupportedAppForeground(inSupportedApp: Boolean) {
         mainHandler.post {
-            if (isYouTubeForeground == inYouTube) return@post
-            isYouTubeForeground = inYouTube
-            if (!inYouTube) {
+            if (isSupportedAppForeground == inSupportedApp) return@post
+            isSupportedAppForeground = inSupportedApp
+            if (!inSupportedApp) {
                 cancelTimers()
                 isFlashingCheckmark = false
                 isBannerRequested = false
@@ -101,7 +102,7 @@ class FloatingOverlayController(
             val prevY = prefs.floatingYFraction
             prefs = newPrefs
 
-            if (!isYouTubeForeground) return@post
+            if (!isSupportedAppForeground) return@post
 
             if (prevVisibility != newPrefs.floatingVisibility) {
                 isCollapsedToSliver = false
@@ -123,7 +124,7 @@ class FloatingOverlayController(
 
     fun onConfigurationChanged() {
         mainHandler.post {
-            if (!isYouTubeForeground) return@post
+            if (!isSupportedAppForeground) return@post
             updateWindowPositionFromPrefs()
             applyButtonLayoutAndStyle()
             updateBannerLayout()
@@ -132,7 +133,7 @@ class FloatingOverlayController(
 
     fun triggerSkipCheckmarkFlash() {
         mainHandler.post {
-            if (!isYouTubeForeground) return@post
+            if (!isSupportedAppForeground) return@post
             if (prefs.floatingVisibility == FloatingVisibility.HIDDEN) return@post
             if (!PermissionChecker.canDrawOverlays(context)) return@post
 
@@ -157,7 +158,7 @@ class FloatingOverlayController(
     fun destroy() {
         mainHandler.post {
             cancelTimers()
-            isYouTubeForeground = false
+            isSupportedAppForeground = false
             isBannerRequested = false
             removeButtonView()
             removeBannerView()
@@ -171,13 +172,13 @@ class FloatingOverlayController(
 
     private fun scheduleAutoHideIfNeeded() {
         mainHandler.removeCallbacks(autoHideRunnable)
-        if (isYouTubeForeground && prefs.floatingVisibility == FloatingVisibility.AUTO_HIDE) {
+        if (isSupportedAppForeground && prefs.floatingVisibility == FloatingVisibility.AUTO_HIDE) {
             mainHandler.postDelayed(autoHideRunnable, AUTO_HIDE_DELAY_MS)
         }
     }
 
     private fun syncButtonVisibility() {
-        val shouldShow = isYouTubeForeground &&
+        val shouldShow = isSupportedAppForeground &&
             prefs.floatingVisibility != FloatingVisibility.HIDDEN &&
             PermissionChecker.canDrawOverlays(context)
 
@@ -193,7 +194,7 @@ class FloatingOverlayController(
     }
 
     private fun syncBannerVisibility() {
-        val shouldShow = isYouTubeForeground &&
+        val shouldShow = isSupportedAppForeground &&
             isBannerRequested &&
             prefs.showAdBannerEnabled &&
             bannerMessage.isNotBlank() &&

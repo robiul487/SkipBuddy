@@ -8,6 +8,7 @@ import com.example.model.AdOutcome
 import com.example.model.AppLanguage
 import com.example.model.DailyStats
 import com.example.model.RecentActivityEntry
+import com.example.model.SupportedApp
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
@@ -172,11 +173,62 @@ class DetectionEngineTest {
         assertEquals(daily, SkipBuddyRepository.decodeDailyStats(encodedDaily))
 
         val recent = listOf(
-            RecentActivityEntry(1_700_000_000_000L, AdOutcome.SKIPPED),
-            RecentActivityEntry(1_700_000_050_000L, AdOutcome.UNSKIPPABLE),
-            RecentActivityEntry(1_700_000_100_000L, AdOutcome.FAILED)
+            RecentActivityEntry(1_700_000_000_000L, AdOutcome.SKIPPED, SupportedApp.YOUTUBE),
+            RecentActivityEntry(1_700_000_050_000L, AdOutcome.UNSKIPPABLE, SupportedApp.YOUTUBE_MUSIC),
+            RecentActivityEntry(1_700_000_100_000L, AdOutcome.FAILED, SupportedApp.YOUTUBE_MUSIC)
         )
         val encodedRecent = SkipBuddyRepository.encodeRecentActivity(recent)
         assertEquals(recent, SkipBuddyRepository.decodeRecentActivity(encodedRecent))
+
+        // Backward compatibility with legacy v1/v2 2-field entries (defaults to YOUTUBE)
+        val legacyDecoded = SkipBuddyRepository.decodeRecentActivity("1700000000000:SKIPPED;1700000050000:UNSKIPPABLE")
+        assertEquals(
+            listOf(
+                RecentActivityEntry(1_700_000_000_000L, AdOutcome.SKIPPED, SupportedApp.YOUTUBE),
+                RecentActivityEntry(1_700_000_050_000L, AdOutcome.UNSKIPPABLE, SupportedApp.YOUTUBE)
+            ),
+            legacyDecoded
+        )
+    }
+
+    @Test
+    fun packageGate_allowsYoutubeAlways_andYoutubeMusicDynamicallyOnly() {
+        // Toggle ON (default)
+        assertTrue(DetectionEngine.isPackageAllowed(DetectionEngine.YOUTUBE_PACKAGE, youtubeMusicEnabled = true))
+        assertTrue(DetectionEngine.isPackageAllowed(DetectionEngine.YOUTUBE_MUSIC_PACKAGE, youtubeMusicEnabled = true))
+        assertFalse(DetectionEngine.isPackageAllowed("com.android.chrome", youtubeMusicEnabled = true))
+        assertFalse(DetectionEngine.isPackageAllowed("com.spotify.music", youtubeMusicEnabled = true))
+        assertFalse(DetectionEngine.isPackageAllowed(null, youtubeMusicEnabled = true))
+
+        // Toggle OFF: YouTube stays allowed, YouTube Music is immediately removed from the gate
+        assertTrue(DetectionEngine.isPackageAllowed(DetectionEngine.YOUTUBE_PACKAGE, youtubeMusicEnabled = false))
+        assertFalse(DetectionEngine.isPackageAllowed(DetectionEngine.YOUTUBE_MUSIC_PACKAGE, youtubeMusicEnabled = false))
+        assertFalse(DetectionEngine.isPackageAllowed("com.android.chrome", youtubeMusicEnabled = false))
+    }
+
+    @Test
+    fun detectionEngine_runsUnchangedOnYoutubeMusicNodes() {
+        val ytmNodes = listOf(
+            NodeSnapshot(
+                nodeIndex = 0,
+                parentIndex = -1,
+                packageName = DetectionEngine.YOUTUBE_MUSIC_PACKAGE,
+                className = "android.widget.Button",
+                viewIdResourceName = "com.google.android.apps.youtube.music:id/skip_ad_button",
+                text = "Skip",
+                contentDescription = "Skip Ad",
+                isVisibleToUser = true,
+                isClickable = true,
+                isEnabled = true,
+                boundsLeft = 80,
+                boundsTop = 180,
+                boundsRight = 280,
+                boundsBottom = 250
+            )
+        )
+        val result = DetectionEngine.analyzeTree(ytmNodes, AppLanguage.ENGLISH)
+        assertEquals(AdState.AD_ACTIVE, result.adState)
+        assertTrue(result.hasClickableSkip)
+        assertEquals("STEP0_VIEW_ID", result.skipCandidate?.languageStep)
     }
 }

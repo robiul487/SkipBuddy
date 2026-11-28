@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SkipBuddy</string>
-    <string name="accessibility_service_description">SkipBuddy automatically taps Skip Ad in YouTube for you.</string>
+    <string name="accessibility_service_description">SkipBuddy automatically taps Skip Ad in YouTube and YouTube Music for you.</string>
 
     <!-- Navigation -->
     <string name="nav_home">Home</string>
@@ -9,7 +9,7 @@
 
     <!-- Home Status & Controls -->
     <string name="service_status_on_title">SkipBuddy is ON</string>
-    <string name="service_status_on_subtitle">Watching YouTube to skip ads automatically.</string>
+    <string name="service_status_on_subtitle">Watching YouTube and YouTube Music to skip ads automatically.</string>
     <string name="service_status_paused_title">SkipBuddy is PAUSED</string>
     <string name="service_status_paused_subtitle">Service is active, but auto-skip is paused below.</string>
     <string name="service_status_off_title">SkipBuddy is OFF</string>
@@ -45,19 +45,21 @@
     <string name="chart_today_short">Today</string>
 
     <string name="recent_activity_title">Recent Activity</string>
-    <string name="recent_activity_empty">No ad activity yet. Open YouTube and SkipBuddy will handle ads for you.</string>
+    <string name="recent_activity_empty">No ad activity yet. Open YouTube or YouTube Music and SkipBuddy will handle ads for you.</string>
+    <string name="app_source_youtube">YouTube</string>
+    <string name="app_source_youtube_music">YouTube Music</string>
     <string name="outcome_skipped">Skipped</string>
     <string name="outcome_unskippable">Unskippable (Muted)</string>
     <string name="outcome_failed">Failed to skip</string>
 
     <!-- Guide Tab -->
     <string name="guide_title">How SkipBuddy Works</string>
-    <string name="guide_caregiver_note">You set SkipBuddy up once, then hide and lock the button — your father just watches YouTube, he never needs to touch SkipBuddy.</string>
+    <string name="guide_caregiver_note">You set SkipBuddy up once, then hide and lock the button — your father just uses YouTube and YouTube Music, he never needs to touch SkipBuddy.</string>
     <string name="button_reopen_wizard">Open Setup Wizard</string>
     <string name="guide_step_1_title">1. Enable Accessibility</string>
     <string name="guide_step_1_body">Open Accessibility Settings, find SkipBuddy, and turn it ON.</string>
-    <string name="guide_step_2_title">2. Open YouTube</string>
-    <string name="guide_step_2_body">Play any video in portrait, landscape, or fullscreen.</string>
+    <string name="guide_step_2_title">2. Open YouTube and YouTube Music</string>
+    <string name="guide_step_2_body">Play any video or music in YouTube and YouTube Music — in portrait, landscape, or fullscreen.</string>
     <string name="guide_step_3_title">3. Ads Skip Automatically</string>
     <string name="guide_step_3_body">SkipBuddy taps Skip Ad automatically and mutes unskippable ads.</string>
 
@@ -69,9 +71,9 @@
     <string name="button_open">Open</string>
 
     <string name="perm_accessibility_title">Accessibility Service</string>
-    <string name="perm_accessibility_desc">Finds and taps Skip Ad inside YouTube only.</string>
+    <string name="perm_accessibility_desc">Finds and taps Skip Ad inside YouTube and YouTube Music only.</string>
     <string name="perm_overlay_title">Display Over Other Apps</string>
-    <string name="perm_overlay_desc">Shows the optional YouTube-only floating button and ad banner.</string>
+    <string name="perm_overlay_desc">Shows the optional floating button and ad banner in YouTube and YouTube Music.</string>
     <string name="perm_battery_title">Battery Optimization</string>
     <string name="perm_battery_desc">Stops Android from turning off SkipBuddy in the background.</string>
     <string name="perm_notifications_title">Notifications</string>
@@ -91,9 +93,9 @@
     <string name="wizard_finish">Finish</string>
 
     <string name="wizard_step_accessibility_title">Turn On Accessibility Service</string>
-    <string name="wizard_step_accessibility_body">This is required so SkipBuddy can detect ads and tap Skip Ad inside YouTube.</string>
+    <string name="wizard_step_accessibility_body">This is required so SkipBuddy can detect ads and tap Skip Ad inside YouTube and YouTube Music.</string>
     <string name="wizard_step_overlay_title">Allow Display Over Other Apps</string>
-    <string name="wizard_step_overlay_body">Allows the YouTube-only floating indicator and on-screen ad wait banner.</string>
+    <string name="wizard_step_overlay_body">Allows the floating indicator and on-screen ad wait banner in YouTube and YouTube Music.</string>
     <string name="wizard_step_battery_title">Disable Battery Optimization</string>
     <string name="wizard_step_battery_body">Keeps SkipBuddy running quietly in the background without being stopped.</string>
     <string name="wizard_step_notifications_title">Allow Quiet Notifications</string>
@@ -113,8 +115,10 @@
     <string name="settings_card_autoskip">Auto-Skip</string>
     <string name="settings_master_autoskip">Master Auto-Skip</string>
     <string name="settings_master_autoskip_desc">Automatically tap Skip Ad when available.</string>
-    <string name="settings_only_youtube">Only in YouTube</string>
+    <string name="settings_only_youtube">Supported apps: YouTube + YouTube Music</string>
     <string name="settings_only_youtube_note">For safety, SkipBuddy never works in other apps.</string>
+    <string name="settings_youtube_music">YouTube Music</string>
+    <string name="settings_youtube_music_desc">Automatically skip and mute ads in YouTube Music.</string>
     <string name="settings_click_delay">Click Delay</string>
     <string name="delay_instant">Instant</string>
     <string name="delay_half_sec">0.5s</string>
@@ -171,10 +175,10 @@
     <string name="button_reset_all">Reset All Counters</string>
     <string name="button_clear_log">Clear Recent Activity Log</string>
     <string name="settings_debug_log">Detection Debug Log</string>
-    <string name="settings_debug_log_desc">Logs YouTube ad node fields only for device testing.</string>
+    <string name="settings_debug_log_desc">Logs YouTube and YouTube Music ad node fields only for device testing.</string>
     <string name="button_share_debug_log">Share Debug Log</string>
     <string name="about_version_format">SkipBuddy Version %1$s</string>
-    <string name="about_privacy_text">Works offline, collects no data, works only in YouTube (com.google.android.youtube) in portrait, landscape, and fullscreen.</string>
+    <string name="about_privacy_text">Works offline, collects no data, works only in YouTube and YouTube Music (com.google.android.youtube, com.google.android.apps.youtube.music) in portrait, landscape, and fullscreen.</string>
 
     <!-- Announcement phrase -->
     <string name="ad_wait_announcement">Advertisement is playing, please wait a moment</string>
@@ -183,7 +187,7 @@
     <string name="notif_channel_name">SkipBuddy Status</string>
     <string name="notif_channel_desc">Quiet reminder if SkipBuddy is turned off after phone restart.</string>
     <string name="notif_boot_off_title">SkipBuddy is turned off</string>
-    <string name="notif_boot_off_body">Tap to open SkipBuddy and turn Accessibility back on for YouTube.</string>
+    <string name="notif_boot_off_body">Tap to open SkipBuddy and turn Accessibility back on for YouTube and YouTube Music.</string>
     <string name="toast_ad_skipped">Ad Skipped</string>
     <string name="toast_locked_status_active">SkipBuddy is ON (Locked — change in app)</string>
     <string name="toast_locked_status_paused">SkipBuddy is PAUSED (Locked — change in app)</string>

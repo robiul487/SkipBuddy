@@ -17,7 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -57,6 +57,7 @@ import com.example.data.SkipBuddyRepository
 import com.example.model.AdOutcome
 import com.example.model.DailyStats
 import com.example.model.RecentActivityEntry
+import com.example.model.SupportedApp
 import com.example.ui.SkipBuddyUiState
 import com.example.ui.components.RestrictedSettingHelpCard
 import com.example.ui.components.SkipBuddyCard
@@ -186,11 +187,15 @@ fun HomeScreen(
                 }
             }
         } else {
-            items(
+            itemsIndexed(
                 items = prefs.recentActivity.take(20),
-                key = { "${it.timestampMs}_${it.outcome.name}" }
-            ) { entry ->
-                RecentActivityRowCard(entry = entry, locale = displayLocale)
+                key = { index, it -> "${index}_${it.timestampMs}_${it.outcome.name}_${it.app.name}" }
+            ) { index, entry ->
+                RecentActivityRowCard(
+                    entry = entry,
+                    locale = displayLocale,
+                    testTag = "recent_activity_row_$index"
+                )
             }
         }
 
@@ -720,7 +725,8 @@ private fun Last7DaysBarChartCard(
 @Composable
 private fun RecentActivityRowCard(
     entry: RecentActivityEntry,
-    locale: Locale
+    locale: Locale,
+    testTag: String
 ) {
     val (icon, tint, bg, labelRes) = when (entry.outcome) {
         AdOutcome.SKIPPED -> Quadruple(
@@ -743,7 +749,10 @@ private fun RecentActivityRowCard(
         )
     }
 
-    SkipBuddyCard {
+    val appChipBg = if (entry.app == SupportedApp.YOUTUBE_MUSIC) MetricRedBg else SurfaceSubtle
+    val appChipText = if (entry.app == SupportedApp.YOUTUBE_MUSIC) MetricRed else TextSecondary
+
+    SkipBuddyCard(modifier = Modifier.testTag(testTag)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -768,11 +777,27 @@ private fun RecentActivityRowCard(
                     )
                 }
                 Spacer(modifier = Modifier.width(12.dp))
-                Text(
-                    text = stringResource(labelRes),
-                    style = MaterialTheme.typography.titleSmall,
-                    color = TextPrimary
-                )
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = stringResource(labelRes),
+                        style = MaterialTheme.typography.titleSmall,
+                        color = TextPrimary
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(appChipBg)
+                            .padding(horizontal = 8.dp, vertical = 2.dp)
+                    ) {
+                        Text(
+                            text = stringResource(entry.app.labelRes),
+                            style = MaterialTheme.typography.labelSmall,
+                            fontWeight = FontWeight.SemiBold,
+                            color = appChipText
+                        )
+                    }
+                }
             }
             Text(
                 text = LocaleHelper.formatTimeShort(entry.timestampMs, locale),
